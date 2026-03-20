@@ -8,5 +8,8 @@
     "recurse": true,
     "tutorials": "./documents",
     "template": "./node_modules/docdash"
+  },
+  "docdash": {
+    "baseUrl": "/jsdocs/"
   }
 }
