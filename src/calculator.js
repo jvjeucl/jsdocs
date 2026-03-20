@@ -53,7 +53,6 @@ function divide(a, b) {
  * @example
  * // Multiply with discount
  * calculateWithDiscount(10, 20, "multiply", true); // 180
- *
  * @example
  * // Add without discount
  * calculateWithDiscount(30, 20, "add", false); // 50
