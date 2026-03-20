@@ -1,0 +1,3 @@
+# Database
+
+We use PostgreSQL as our primary database...

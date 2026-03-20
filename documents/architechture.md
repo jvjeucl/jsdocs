@@ -1,0 +1,3 @@
+# Architecture
+
+This project is structured as a simple calculator library...
