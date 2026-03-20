@@ -11,5 +11,11 @@
   },
   "docdash": {
     "baseUrl": "/jsdocs/"
+  },
+  "templates": {
+    "tabNames": {
+      "api": "API",
+      "tutorials": "Examples"
+    }
   }
 }
