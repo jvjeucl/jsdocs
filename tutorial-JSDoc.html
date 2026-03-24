@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Documents:  - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Documents</h3><ul><li><a href="tutorial-JSDoc.html">JSDocs Komplet Guide</a></li><li><a href="tutorial-architechture.html">architechture</a></li><li><a href="tutorial-database.html">Database</a></li></ul><h3>Global</h3><ul><li><a href="global.html#add">add</a></li><li><a href="global.html#calculateWithDiscount">calculateWithDiscount</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#subtract">subtract</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Documents: </h1>
+    
+
+    <section>
+
+<header>
+    
+
+    <h2>JSDocs Komplet Guide</h2>
+</header>
+
+<article>
+    <h1>JSDoc – Komplet guide</h1>
+<h2>1. Opret projekt</h2>
+<pre class="prettyprint source lang-bash"><code>mkdir jsdoc-demo
+cd jsdoc-demo
+npm init -y
+npm install --save-dev jsdoc
+</code></pre>
+<hr>
+<h2>2. Opret koden der skal dokumenteres</h2>
+<p>Opret filen <code>src/calculator.js</code>:</p>
+<pre class="prettyprint source lang-javascript"><code>function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function divide(a, b) {
+    if (b === 0) throw new Error(&quot;Cannot divide by zero&quot;);
+    return a / b;
+}
+
+function calculateWithDiscount(value1, value2, operationType, hasDiscount) {
+    let result;
+
+    if (operationType === &quot;add&quot;) {
+        result = add(value1, value2);
+    } else if (operationType === &quot;multiply&quot;) {
+        result = multiply(value1, value2);
+    } else {
+        throw new Error(&quot;Unknown operation type&quot;);
+    }
+
+    if (hasDiscount) {
+        result = result > 100 ? result * 0.9 : result * 0.95;
+    }
+
+    return result;
+}
+
+module.exports = { add, subtract, multiply, divide, calculateWithDiscount };
+</code></pre>
+<hr>
+<h2>3. Tilføj JSDoc-kommentarer</h2>
+<pre class="prettyprint source lang-javascript"><code>/**
+ * Adds two numbers together.
+ * @param {number} a - The first number
+ * @param {number} b - The second number
+ * @returns {number} The sum of a and b
+ */
+function add(a, b) {
+    return a + b;
+}
+
+/**
+ * Subtracts b from a.
+ * @param {number} a - The number to subtract from
+ * @param {number} b - The number to subtract
+ * @returns {number} The difference
+ */
+function subtract(a, b) {
+    return a - b;
+}
+
+/**
+ * Multiplies two numbers.
+ * @param {number} a - The first number
+ * @param {number} b - The second number
+ * @returns {number} The product of a and b
+ */
+function multiply(a, b) {
+    return a * b;
+}
+
+/**
+ * Divides a by b.
+ * @param {number} a - The dividend
+ * @param {number} b - The divisor
+ * @returns {number} The result of the division
+ * @throws {Error} If b is zero
+ */
+function divide(a, b) {
+    if (b === 0) throw new Error(&quot;Cannot divide by zero&quot;);
+    return a / b;
+}
+
+/**
+ * Performs an operation on two values and optionally applies a discount.
+ *
+ * Discount rules:
+ * - Result above 100: 10% discount
+ * - Result 100 or below: 5% discount
+ *
+ * @param {number} value1 - The first value
+ * @param {number} value2 - The second value
+ * @param {&quot;add&quot;|&quot;multiply&quot;} operationType - Which operation to perform
+ * @param {boolean} hasDiscount - Whether to apply a discount
+ * @returns {number} The final result after optional discount
+ * @throws {Error} If operationType is not recognized
+ *
+ * @example
+ * // Multiply with discount
+ * calculateWithDiscount(10, 20, &quot;multiply&quot;, true); // 180
+ *
+ * @example
+ * // Add without discount
+ * calculateWithDiscount(30, 20, &quot;add&quot;, false); // 50
+ */
+function calculateWithDiscount(value1, value2, operationType, hasDiscount) {
+    let result;
+
+    if (operationType === &quot;add&quot;) {
+        result = add(value1, value2);
+    } else if (operationType === &quot;multiply&quot;) {
+        result = multiply(value1, value2);
+    } else {
+        throw new Error(&quot;Unknown operation type&quot;);
+    }
+
+    if (hasDiscount) {
+        result = result > 100 ? result * 0.9 : result * 0.95;
+    }
+
+    return result;
+}
+
+module.exports = { add, subtract, multiply, divide, calculateWithDiscount };
+</code></pre>
+<hr>
+<h2>4. Opret JSDoc-konfiguration</h2>
+<p>Opret <code>jsdoc.json</code> i roden:</p>
+<pre class="prettyprint source lang-json"><code>{
+    &quot;source&quot;: {
+        &quot;include&quot;: [&quot;src&quot;],
+        &quot;includePattern&quot;: &quot;.js$&quot;
+    },
+    &quot;opts&quot;: {
+        &quot;destination&quot;: &quot;./docs&quot;,
+        &quot;recurse&quot;: true
+    }
+}
+</code></pre>
+<hr>
+<h2>5. Tilføj npm-script</h2>
+<p>I <code>package.json</code>:</p>
+<pre class="prettyprint source lang-json"><code>&quot;scripts&quot;: {
+    &quot;docs&quot;: &quot;jsdoc -c jsdoc.json&quot;
+}
+</code></pre>
+<hr>
+<h2>6. Generér dokumentationen</h2>
+<pre class="prettyprint source lang-bash"><code>npm run docs
+</code></pre>
+<p>Åbn <code>docs/index.html</code> i din browser.</p>
+<hr>
+<h2>7. Tilføj Markdown-dokumenter</h2>
+<p>Opret en <code>tutorials</code> mappe:</p>
+<pre class="prettyprint source lang-bash"><code>mkdir tutorials
+</code></pre>
+<p>Opret dine Markdown-filer, fx <code>tutorials/architecture.md</code>:</p>
+<pre class="prettyprint source lang-markdown"><code># Architecture
+
+Beskriv din arkitektur her...
+</code></pre>
+<p>Opret <code>tutorials/tutorials.json</code> til at styre titler og rækkefølge:</p>
+<pre class="prettyprint source lang-json"><code>{
+    &quot;architecture&quot;: {
+        &quot;title&quot;: &quot;Architecture&quot;
+    },
+    &quot;database&quot;: {
+        &quot;title&quot;: &quot;Database&quot;
+    }
+}
+</code></pre>
+<p>Opdater <code>jsdoc.json</code> til at inkludere tutorials:</p>
+<pre class="prettyprint source lang-json"><code>{
+    &quot;source&quot;: {
+        &quot;include&quot;: [&quot;src&quot;],
+        &quot;includePattern&quot;: &quot;.js$&quot;
+    },
+    &quot;opts&quot;: {
+        &quot;destination&quot;: &quot;./docs&quot;,
+        &quot;recurse&quot;: true,
+        &quot;tutorials&quot;: &quot;./tutorials&quot;
+    }
+}
+</code></pre>
+<p>Du kan også linke til et dokument direkte fra koden:</p>
+<pre class="prettyprint source lang-javascript"><code>/**
+ * Connects to the database.
+ * @see <a href="tutorial-database.html">Database</a>
+ */
+function connect() { ... }
+</code></pre>
+<hr>
+<h2>8. Installer docdash theme</h2>
+<pre class="prettyprint source lang-bash"><code>npm install --save-dev docdash
+</code></pre>
+<p>Opdater <code>jsdoc.json</code>:</p>
+<pre class="prettyprint source lang-json"><code>{
+    &quot;source&quot;: {
+        &quot;include&quot;: [&quot;src&quot;],
+        &quot;includePattern&quot;: &quot;.js$&quot;
+    },
+    &quot;opts&quot;: {
+        &quot;destination&quot;: &quot;./docs&quot;,
+        &quot;recurse&quot;: true,
+        &quot;tutorials&quot;: &quot;./tutorials&quot;,
+        &quot;template&quot;: &quot;./node_modules/docdash&quot;
+    }
+}
+</code></pre>
+<hr>
+<h2>9. Tilpas docdash – omdøb &quot;Tutorials&quot;</h2>
+<p>Da docdash er under Apache 2.0 licens må du frit kopiere og modificere det. Kopiér docdash ud af node_modules:</p>
+<pre class="prettyprint source lang-bash"><code>cp -r node_modules/docdash ./themes/docdash
+</code></pre>
+<p>Opdater <code>jsdoc.json</code> til at pege på din lokale kopi:</p>
+<pre class="prettyprint source lang-json"><code>&quot;template&quot;: &quot;./themes/docdash&quot;
+</code></pre>
+<p>Åbn <code>themes/docdash/publish.js</code> og find denne linje:</p>
+<pre class="prettyprint source lang-javascript"><code>Tutorials: buildMemberNav(members.tutorials, 'Tutorials', seenTutorials, linktoTutorial),
+</code></pre>
+<p>Ret den til:</p>
+<pre class="prettyprint source lang-javascript"><code>Tutorials: buildMemberNav(members.tutorials, env.conf.docdash.tutorialsLabel || 'Tutorials', seenTutorials, linktoTutorial),
+</code></pre>
+<p>Nu kan du styre navnet via <code>jsdoc.json</code>:</p>
+<pre class="prettyprint source lang-json"><code>{
+    &quot;source&quot;: {
+        &quot;include&quot;: [&quot;src&quot;],
+        &quot;includePattern&quot;: &quot;.js$&quot;
+    },
+    &quot;opts&quot;: {
+        &quot;destination&quot;: &quot;./docs&quot;,
+        &quot;recurse&quot;: true,
+        &quot;tutorials&quot;: &quot;./tutorials&quot;,
+        &quot;template&quot;: &quot;./themes/docdash&quot;
+    },
+    &quot;docdash&quot;: {
+        &quot;tutorialsLabel&quot;: &quot;Documents&quot;
+    }
+}
+</code></pre>
+<hr>
+<h2>10. Publicer til GitHub Pages via GitHub Actions</h2>
+<p>Opret filen <code>.github/workflows/docs.yml</code>:</p>
+<pre class="prettyprint source lang-yaml"><code>name: Publish Docs
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+
+      - run: npm run docs
+
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+</code></pre>
+<p>Aktiver GitHub Actions skriveadgang i dit repository:</p>
+<p><strong>Settings</strong> → <strong>Actions</strong> → <strong>General</strong> → <strong>Workflow permissions</strong> → <strong>Read and write permissions</strong></p>
+<p>Aktiver GitHub Pages:</p>
+<p><strong>Settings</strong> → <strong>Pages</strong> → <strong>Source</strong> → vælg <strong>gh-pages</strong> branch og <strong>/ (root)</strong></p>
+<p>Din dokumentation publiceres automatisk på:</p>
+<pre class="prettyprint source"><code>https://&lt;dit-brugernavn>.github.io/&lt;dit-repo-navn>/
+</code></pre>
+<hr>
+<h2>Filstruktur</h2>
+<pre class="prettyprint source"><code>jsdoc-demo/
+├── .github/
+│   └── workflows/
+│       └── docs.yml
+├── src/
+│   └── calculator.js
+├── themes/
+│   └── docdash/        ← din modificerede kopi
+├── tutorials/
+│   ├── tutorials.json
+│   ├── architecture.md
+│   └── database.md
+├── docs/               ← genereret, må ikke committes
+├── .gitignore
+├── jsdoc.json
+└── package.json
+</code></pre>
+<p>Tilføj til <code>.gitignore</code>:</p>
+<pre class="prettyprint source"><code>node_modules/
+docs/
+</code></pre>
+</article>
+
+</section>
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.5</a> on Tue Mar 24 2026 07:44:36 GMT+0000 (Coordinated Universal Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
