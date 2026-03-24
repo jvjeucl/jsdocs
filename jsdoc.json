@@ -7,15 +7,10 @@
     "destination": "./docs",
     "recurse": true,
     "tutorials": "./documents",
-    "template": "./node_modules/docdash"
+    "template": "./themes/docdash"
   },
   "docdash": {
-    "baseUrl": "/jsdocs/"
-  },
-  "templates": {
-    "tabNames": {
-      "api": "API",
-      "tutorials": "Examples"
-    }
+    "baseUrl": "/jsdocs/",
+    "tutorialsLabel": "Documents"
   }
-}
+  }
